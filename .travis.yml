@@ -9,4 +9,4 @@ after_success:
  - ssh-add .travis/aws_terraform
  - ssh-keyscan ec2-34-242-96-23.eu-west-1.compute.amazonaws.com >> ~/.ssh/known_hosts
  - git remote add dokku dokku@ec2-34-242-96-23.eu-west-1.compute.amazonaws.com
- - git push dokku
+ - git push dokku master
