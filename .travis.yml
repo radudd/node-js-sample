@@ -1,17 +1,37 @@
 language: node_js
 node_js:
 - node
-before_install:
+
+env:
+  global:
+  - GIT_USERNAME="Travis CI"
+  - GIT_REPO="git@github.com/radudd/node-js-sample"
+
+before_script:
 - openssl aes-256-cbc -K $encrypted_633962bc81e3_key -iv $encrypted_633962bc81e3_iv
   -in aws.tar.enc -out aws.tar -d
 - tar xvf aws.tar
 - mv .aws ~/
-- pip install --user awscli
+- mv -f .travis/aws_terraform ~/.ssh/id_rsa 
+- chmod 600 ~/.ssh/id_rsa
+- pip -q install --user awscli
 - export PATH=$PATH:$HOME/.local/bin
-after_success:
+
+before_deploy:
+- curl -sSL https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_linux_amd64.zip -o terraform.zip
+- sudo unzip terraform.zip -d /usr/bin/ 
+- rm terraform.zip
+
+deploy:
+- provider: script
+  script: ./terraform/deploy_host.sh
+  skip_cleanup: true
+  on:
+    branch: master
+
+after_script:
 - eval "$(ssh-agent -s)"
-- chmod 600 .travis/aws_terraform
-- ssh-add .travis/aws_terraform
+- ssh-add ~/.ssh/id_rsa
 - export dokku_host=`aws ec2 describe-instances --region eu-west-1 --filters "Name=tag:App,Values=Dokku"
   --filters "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].[PublicDnsName]'
   --output text`
