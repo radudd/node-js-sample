@@ -4,6 +4,7 @@
   "description": "A sample Node.js app using Express 4",
   "main": "index.js",
   "scripts": {
+    "test": "jshint index.js",
     "start": "node index.js"
   },
   "dependencies": {
@@ -25,5 +26,8 @@
   "contributors": [
     "Zeke Sikelianos <zeke@sikelianos.com> (http://zeke.sikelianos.com)"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "jshint": "^2.9.5"
+  }
 }
