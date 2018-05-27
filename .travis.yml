@@ -7,5 +7,6 @@ after_success:
  - eval "$(ssh-agent -s)" 
  - chmod 600 .travis/aws_terraform
  - ssh-add .travis/aws_terraform
- - git remote add dokku DEPLOY_REPO_URI_GOES_HERE
+ - ssh-keyscan ec2-34-242-96-23.eu-west-1.compute.amazonaws.com >> ~/.ssh/known_hosts
+ - git remote add dokku dokku@ec2-34-242-96-23.eu-west-1.compute.amazonaws.com
  - git push dokku
