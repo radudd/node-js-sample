@@ -4,13 +4,14 @@ node_js:
 before_install:
 - openssl aes-256-cbc -K $encrypted_633962bc81e3_key -iv $encrypted_633962bc81e3_iv
   -in aws.tar.enc -out aws.tar -d
+- tar xvf aws.tar
+- mv .aws ~/
 - pip install --user awscli
 - export PATH=$PATH:$HOME/.local/bin
-- tar xvf aws.tar
 after_success:
 - eval "$(ssh-agent -s)"
-- chmod 600 aws_terraform
-- ssh-add aws_terraform
+- chmod 600 .travis/aws_terraform
+- ssh-add .travis/aws_terraform
 - export dokku_host=`aws ec2 describe-instances --region eu-west-1 --filters "Name=tag:App,Values=Dokku"
   --filters "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].[PublicDnsName]'
   --output text`
