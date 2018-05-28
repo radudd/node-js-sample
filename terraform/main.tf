@@ -70,7 +70,7 @@ resource "aws_instance" "dokku" {
 
   key_name        = "dokku_key"
 
-  security_groups = ["dokku_sg"]
+  vpc_security_group_ids = ["dokku_sg"]
 
   tags {
     App = "Dokku"
