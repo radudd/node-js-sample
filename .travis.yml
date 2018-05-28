@@ -8,12 +8,14 @@ env:
 before_install:
 - openssl aes-256-cbc -K $encrypted_cfaf2b433683_key -iv $encrypted_cfaf2b433683_iv
   -in aws.tar.enc -out aws.tar -d
-- tar xvf aws.tar && mv -fv .aws ~/ && mv -fv .ssh/* ~/.ssh/ 
+- tar xvf aws.tar && mv -fv .aws ~/
 before_deploy:
 - curl -sSL https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_linux_amd64.zip
   -o terraform.zip
-- sudo unzip terraform.zip -d /usr/bin/ 
+- sudo unzip terraform.zip -d /usr/bin/
 - rm terraform.zip
+- eval "$(ssh-agent -s)"
+- ssh-add .ssh/aws_terraform
 deploy:
 - provider: script
   script: ./terraform/deploy_aws_host.sh
@@ -21,8 +23,6 @@ deploy:
   on:
     branch: master
 after_deploy:
-- eval "$(ssh-agent -s)"
-- ssh-add ~/.ssh/id_rsa
 - cd terraform && export dokku_host=`terraform output public_dns`
 - ssh-keyscan ${dokku_host} >> ~/.ssh/known_hosts
 - git remote add dokku dokku@${dokku_host}:node-js-app
