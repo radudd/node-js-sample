@@ -6,8 +6,6 @@ region = "eu-west-1"
 cidr_blocks = ["0.0.0.0/0"]
 # Path to SSH public key to be used for EC2 instance and for the Dokku application
 public_key_path = "./keys/aws_terraform.pub"
-# Path to SSH private key to be used for EC2 instance and for the Dokku application
-private_key_path = "./keys/aws_terraform"
 # Dokku version to be installed
 dokku_version = "v0.12.7"
 # Default Dokku application to be deployed initially

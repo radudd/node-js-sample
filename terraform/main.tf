@@ -5,7 +5,6 @@ provider "aws" {
 variable "cidr_blocks" { type = "list" }
 variable "region" {}
 variable "public_key_path" {}
-variable "private_key_path" {}
 variable "remote_user" {}
 variable "dokku_version" {}
 variable "dokku_app" {}
@@ -77,9 +76,6 @@ resource "aws_instance" "dokku" {
     App = "Dokku"
   }
 
-  provisioner "local-exec" {
-    command = "echo ssh -i ${var.private_key_path} ${aws_instance.dokku.public_ip} -l ${var.remote_user} > ssh_connect.txt"
-  }
   user_data = <<-EOF
               #!/bin/bash
               wget https://raw.githubusercontent.com/dokku/dokku/${var.dokku_version}/bootstrap.sh
