@@ -3,6 +3,7 @@
 TF_DIR=`cd $(dirname $0); pwd`
 cd $TF_DIR
 terraform init || exit 99
+terraform refresh || exit 99
 terraform plan || exit 99
 terraform apply -auto-approve || exit 99
 
