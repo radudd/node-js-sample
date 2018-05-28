@@ -77,25 +77,6 @@ resource "aws_instance" "dokku" {
     App = "Dokku"
   }
 
-/*  provisioner "remote-exec" {
-    connection {
-      user        = "ubuntu"
-      private_key = "${file(var.private_key_path)}"
-    }
-    inline = [
-      "wget https://raw.githubusercontent.com/dokku/dokku/${var.dokku_version}/bootstrap.sh",
-      "DOKKU_TAG=${var.dokku_version} sudo bash bootstrap.sh",
-      "sudo dokku ssh-keys:add key01 /home/${var.remote_user}/.ssh/authorized_keys",
-      "sudo dokku domains:add-global ${self.public_dns}",
-      "sudo dokku domains:remove-global ${self.private_dns}",
-    ]
-  }
-  provisioner "local-exec" {
-    command = "grep -q ${var.dokku_tld} /etc/hosts && sudo sed -i 's/.*${var.dokku_tld}$/${aws_instance.dokku.public_ip}  ${var.dokku_tld}/' /etc/hosts || sudo echo ${aws_instance.dokku.public_ip}  ${var.dokku_tld} >> /etc/hosts"
-  }
-  user_data = "${file(var.install_dokku)}"
-*/
-
   provisioner "local-exec" {
     command = "echo ssh -i ${var.private_key_path} ${aws_instance.dokku.public_ip} -l ${var.remote_user} > ssh_connect.txt"
   }
@@ -106,4 +87,8 @@ resource "aws_instance" "dokku" {
               dokku ssh-keys:add key01 /home/${var.remote_user}/.ssh/authorized_keys &> /var/log/dokku_config.log
               dokku apps:create ${var.dokku_app} &>> /var/log/dokku_config.log
               EOF
+}
+
+output "public_dns" {
+  value = "${aws_instance.dokku.public_dns}"
 }
