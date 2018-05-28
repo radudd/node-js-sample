@@ -7,9 +7,9 @@ terraform plan || exit 99
 terraform apply -auto-approve || exit 99
 
 ## Commit changes
-echo "Git: Configuring git user.name..." && echo -e "git config user.name $GIT_USERNAME" | tee /dev/stderr | bash
-echo "Git: Setting remote repository..." && echo -e "git remote add base $GIT_REPO" | tee /dev/stderr | bash
-echo "Git: Checking out master" && echo -e "git checkout master" | tee /dev/stderr | bash
-echo "Git: Add to staging..." && echo "git add ." | tee /dev/stderr | bash
-echo "Git: Commiting changes ..." && echo "git commit -am \"`date +%Y%m%d-%H%M`: Terraforming by Travis CI\"" | tee /dev/stderr | bash
-echo "Git: Pushing to remote repo..." && echo "git push base master" | tee /dev/stderr | bash
+echo -e "[Git]: Configuring git user.name..." && echo "git config user.name $GIT_USERNAME" | tee /dev/stderr | bash
+echo -e "[Git]: Setting remote repository..." && echo "git remote add base $GIT_REPO" | tee /dev/stderr | bash
+echo -e "[Git]: Checking out master" && echo "git checkout master" | tee /dev/stderr | bash
+echo -e "[Git]: Add to staging..." && echo "git add ." | tee /dev/stderr | bash
+echo -e "[Git]: Commiting changes ..." && echo "git commit -am \"`date +%Y%m%d-%H%M`: Terraforming by Travis CI\"" | tee /dev/stderr | bash
+echo -e "[Git]: Pushing to remote repo..." && echo "git push base master" | tee /dev/stderr | bash

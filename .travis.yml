@@ -27,4 +27,5 @@ after_deploy:
 - ssh-keyscan ${dokku_host} >> ~/.ssh/known_hosts
 - git remote add dokku dokku@${dokku_host}:node-js-app
 #- for i in `seq 1 10`; do (ssh -q ${dokku_host} -l dokku ssh-keys:list && git push dokku master && break) || echo "Cannot deploy to Dokku :( ... "; sleep 10; done
-- until ssh -q ${dokku_host} -l dokku ssh-keys:list; do sleep 30; done; git push dokku master
+- cat  ~/.ssh/known_hosts
+- until ssh -q -o StrictHostKeyChecking=no ${dokku_host} -l dokku ssh-keys:list; do sleep 30; done; git push dokku master
