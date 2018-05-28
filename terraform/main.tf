@@ -78,8 +78,13 @@ resource "aws_instance" "dokku" {
 
   user_data = <<-EOF
               #!/bin/bash
+              # https://github.com/dokku/dokku/issues/501
+              wget -O /etc/init/docker.conf https://raw.github.com/dotcloud/docker/master/contrib/init/upstart/docker.conf
+              service docker restart
+              # Install Dokku
               wget https://raw.githubusercontent.com/dokku/dokku/${var.dokku_version}/bootstrap.sh
               DOKKU_TAG=${var.dokku_version} bash bootstrap.sh
+              # Configure Dokku
               dokku ssh-keys:add key01 /home/${var.remote_user}/.ssh/authorized_keys &> /var/log/dokku_config.log
               dokku apps:create ${var.dokku_app} &>> /var/log/dokku_config.log
               EOF
