@@ -22,9 +22,3 @@ deploy:
   skip_cleanup: true
   on:
     branch: master
-after_deploy:
-- cd terraform && export dokku_host=`terraform output public_dns`
-- ssh-keyscan ${dokku_host} >> ~/.ssh/known_hosts
-- git remote add dokku dokku@${dokku_host}:node-js-app
-- git fetch --unshallow
-- until ssh -q -o StrictHostKeyChecking=no ${dokku_host} -l dokku ssh-keys:list; do sleep 30; done; git push dokku master
