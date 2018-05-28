@@ -26,5 +26,5 @@ after_deploy:
 - cd terraform && export dokku_host=`terraform output public_dns`
 - ssh-keyscan ${dokku_host} >> ~/.ssh/known_hosts
 - git remote add dokku dokku@${dokku_host}:node-js-app
-- for i in `seq 1 10`; do git push dokku master && break || echo "Cannot deploy to Dokku :( ... "; sleep 10; done
+- for i in `seq 1 10`; do (ssh -q ${dokku_host} -l dokku ssh-keys:list && git push dokku master && break) || echo "Cannot deploy to Dokku :( ... "; sleep 10; done
 #- for i in `seq 1 10`; do git push dokku master 2>/dev/null && echo "Deployment successfull :)" && break ||echo "Cannot deploy to Dokku :( ... "; sleep 10; done
