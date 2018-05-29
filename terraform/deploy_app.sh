@@ -1,7 +1,5 @@
 #!/bin/bash
 # Deploy App to Dokku
-set -x 
-
 TF_DIR=`cd $(dirname $0); pwd`
 cd $TF_DIR
 
