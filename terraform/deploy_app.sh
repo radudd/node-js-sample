@@ -1,5 +1,10 @@
 #!/bin/bash
 # Deploy App to Dokku
+set -x 
+
+TF_DIR=`cd $(dirname $0); pwd`
+cd $TF_DIR
+
 export DOKKU_HOST=`terraform output public_dns`
 ssh-keyscan ${DOKKU_HOST} >> ~/.ssh/known_hosts
 git remote add dokku dokku@${DOKKU_HOST}:${APP_NAME}
