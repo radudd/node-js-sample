@@ -3,6 +3,8 @@ node_js:
 - node
 env:
   global:
+  - APP_NAME="node-js-sample"
+  - APP_PORT=5000
   - GIT_USERNAME="Travis CI"
   - GIT_REPO="git@github.com:radudd/node-js-sample"
 before_install:

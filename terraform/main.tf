@@ -86,7 +86,7 @@ resource "aws_instance" "dokku" {
               DOKKU_TAG=${var.dokku_version} bash bootstrap.sh
               # Configure Dokku
               dokku ssh-keys:add key01 /home/${var.remote_user}/.ssh/authorized_keys &> /var/log/dokku_config.log
-              dokku apps:create ${var.dokku_app} &>> /var/log/dokku_config.log
+              #dokku apps:create ${var.dokku_app} &>> /var/log/dokku_config.log
               EOF
 }
 

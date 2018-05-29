@@ -15,9 +15,9 @@ echo -e "[Git]: Commiting changes ..." && echo "git commit -am \"`date +%Y%m%d-%
 echo -e "[Git]: Pushing to remote repo..." && echo "git push base master" | tee /dev/stderr | bash
 
 # Deploy App to Dokku
-export dokku_host=`terraform output public_dns`
-ssh-keyscan ${dokku_host} >> ~/.ssh/known_hosts
-git remote add dokku dokku@${dokku_host}:node-js-app
+export DOKKU_HOST=`terraform output public_dns`
+ssh-keyscan ${DOKKU_HOST} >> ~/.ssh/known_hosts
+git remote add dokku dokku@${DOKKU_HOST}:${APP_NAME}
 git fetch --unshallow
-until ssh -q -o StrictHostKeyChecking=no ${dokku_host} -l dokku ssh-keys:list; do sleep 30; done; git push dokku master
-echo http://${dokku_host}:5000
+until ssh -q -o StrictHostKeyChecking=no ${DOKKU_HOST} -l dokku ssh-keys:list; do sleep 30; done; git push dokku master
+echo http://${DOKKU_HOST}:${APP_PORT}
