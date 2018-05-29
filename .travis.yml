@@ -8,7 +8,7 @@ env:
   - APP_PORT=5000
   - GIT_USERNAME="Travis CI"
   - GIT_REPO="git@github.com:radudd/node-js-sample"
-  - DOKKU_HOST=""
+  - DOKKU_HOST="ec2-34-245-118-14.eu-west-1.compute.amazonaws.com"
 before_install:
 - openssl aes-256-cbc -K $encrypted_cfaf2b433683_key -iv $encrypted_cfaf2b433683_iv
   -in aws.tar.enc -out aws.tar -d 
