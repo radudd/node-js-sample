@@ -11,8 +11,8 @@ env:
   - DOKKU_HOST=""
 before_install:
 - openssl aes-256-cbc -K $encrypted_cfaf2b433683_key -iv $encrypted_cfaf2b433683_iv
-  -in aws.tar.enc -out aws.tar -d
-- tar xvf aws.tar && mv -fv .aws ~/
+  -in aws.tar.enc -out aws.tar -d 
+- tar xvf aws.tar && mv -f .aws ~/ && rm -f aws.tar
 - eval "$(ssh-agent -s)"
 - ssh-add .ssh/aws_terraform
 deploy:
