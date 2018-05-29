@@ -21,7 +21,6 @@ deploy:
   skip_cleanup: true
   on:
     branch: master
-  if: env(DOKKU_HOST) == ""
 - provider: script
   script: ./deploy_app.sh
   skip_cleanup: true
