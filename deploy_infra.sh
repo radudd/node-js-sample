@@ -5,8 +5,7 @@ sudo unzip terraform.zip -d /usr/bin/
 rm terraform.zip
 
 # Apply Terraform deployment
-TF_DIR=`cd $(dirname $0); pwd`
-cd $TF_DIR
+cd terraform
 terraform init || exit 99
 terraform plan || exit 99
 terraform apply -auto-approve || exit 99

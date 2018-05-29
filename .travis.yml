@@ -8,6 +8,7 @@ env:
   - APP_PORT=5000
   - GIT_USERNAME="Travis CI"
   - GIT_REPO="git@github.com:radudd/node-js-sample"
+  - DOKKU_HOST=""
 before_install:
 - openssl aes-256-cbc -K $encrypted_cfaf2b433683_key -iv $encrypted_cfaf2b433683_iv
   -in aws.tar.enc -out aws.tar -d
@@ -16,12 +17,12 @@ before_install:
 - ssh-add .ssh/aws_terraform
 deploy:
 - provider: script
-  script: ./terraform/deploy_infra.sh
+  script: ./deploy_infra.sh
   skip_cleanup: true
   on:
     branch: master
 - provider: script
-  script: ./terraform/deploy_app.sh
+  script: ./deploy_app.sh
   skip_cleanup: true
   on:
     branch: master
