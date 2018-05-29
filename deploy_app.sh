@@ -1,8 +1,7 @@
 #!/bin/bash
 # Deploy App to Dokku
-cd terraform
 
-export DOKKU_HOST=${DOKKU_HOST:-`terraform output public_dns`}
+export DOKKU_HOST=${DOKKU_HOST:-`cd terraform && terraform output public_dns`}
 if [[ -n $DOKKU_HOST ]]; then
     ssh-keyscan ${DOKKU_HOST} >> ~/.ssh/known_hosts
     git remote add dokku dokku@${DOKKU_HOST}:${APP_NAME}
