@@ -1,4 +1,9 @@
 #!/bin/bash
+# Install Terraform
+curl -sSL https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_linux_amd64.zip -o terraform.zip
+sudo unzip terraform.zip -d /usr/bin/
+rm terraform.zip
+
 # Apply Terraform deployment
 TF_DIR=`cd $(dirname $0); pwd`
 cd $TF_DIR
