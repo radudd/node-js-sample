@@ -15,7 +15,12 @@ before_install:
 - ssh-add .ssh/aws_terraform
 deploy:
 - provider: script
-  script: ./terraform/deploy_aws.sh
+  script: ./terraform/deploy_infra.sh
+  skip_cleanup: true
+  on:
+    branch: master
+- provider: script
+  script: ./terraform/deploy_app.sh
   skip_cleanup: true
   on:
     branch: master
