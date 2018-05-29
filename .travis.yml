@@ -4,11 +4,17 @@ node_js:
 sudo: required
 env:
   global:
+  # The name that Dokku will use for your application
   - APP_NAME="node-js-sample"
+  # Port on which your application is running
   - APP_PORT=5000
+  # Git username to be used by the commits from Travis CI build servers
   - GIT_USERNAME="Travis CI"
+  # Your own GitHub repository for which you want to achieve CD
   - GIT_REPO="git@github.com:radudd/node-js-sample"
+  # This is important. Keep this variable undefined, if you want TravisCI to run Terraform to deploy your infrastructure. Otherwise, define your static EC2 instance here and TravisCI will skip Terraform deployment
   - DOKKU_HOST=""
+
 before_install:
 - openssl aes-256-cbc -K $encrypted_cfaf2b433683_key -iv $encrypted_cfaf2b433683_iv
   -in aws.tar.enc -out aws.tar -d 
